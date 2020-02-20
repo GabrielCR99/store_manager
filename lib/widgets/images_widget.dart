@@ -16,6 +16,7 @@ class ImagesWidget extends FormField<List> {
             autovalidate: isAutoValidate,
             builder: (state) {
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
                     height: 124.0,
