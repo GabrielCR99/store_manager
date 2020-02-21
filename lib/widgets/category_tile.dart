@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:store_manager/screens/product_screen.dart';
+import 'package:store_manager/widgets/edit_category_dialog.dart';
 
 class CategoryTile extends StatelessWidget {
   final DocumentSnapshot category;
@@ -13,9 +14,18 @@ class CategoryTile extends StatelessWidget {
       margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
       child: Card(
         child: ExpansionTile(
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(category.data['icon']),
-            backgroundColor: Colors.transparent,
+          leading: GestureDetector(
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => EditCategoryDialog(
+                        category: category,
+                      ));
+            },
+            child: CircleAvatar(
+              backgroundImage: NetworkImage(category.data['icon']),
+              backgroundColor: Colors.transparent,
+            ),
           ),
           title: Text(
             category.data['title'],
@@ -37,10 +47,11 @@ class CategoryTile extends StatelessWidget {
                       trailing:
                           Text('R\$ ${doc.data['price'].toStringAsFixed(2)}'),
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen(
-                          categoryId: category.documentID,
-                          product: doc,
-                        )));
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ProductScreen(
+                                  categoryId: category.documentID,
+                                  product: doc,
+                                )));
                       },
                     );
                   }).toList()
@@ -54,10 +65,10 @@ class CategoryTile extends StatelessWidget {
                       ),
                       trailing: Text('Adicionar'),
                       onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen(
-                          categoryId: category.documentID,
-                        )));
-
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ProductScreen(
+                                  categoryId: category.documentID,
+                                )));
                       },
                     )),
                 );

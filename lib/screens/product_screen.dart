@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:store_manager/blocs/products_bloc.dart';
 import 'package:store_manager/validators/products_validator.dart';
 import 'package:store_manager/widgets/images_widget.dart';
+import 'package:store_manager/widgets/products_size.dart';
 
 class ProductScreen extends StatefulWidget {
   final String categoryId;
@@ -55,10 +56,12 @@ class _ProductScreenState extends State<ProductScreen> with ProductsValidator {
                   initialData: false,
                   builder: (context, snapshot) {
                     return IconButton(
-                        onPressed: snapshot.data ? null : (){
-                          _productsBloc.deleteProduct();
-                          Navigator.of(context).pop();
-                        },
+                        onPressed: snapshot.data
+                            ? null
+                            : () {
+                                _productsBloc.deleteProduct();
+                                Navigator.of(context).pop();
+                              },
                         icon: Icon(Icons.delete_forever));
                   },
                 );
@@ -121,6 +124,19 @@ class _ProductScreenState extends State<ProductScreen> with ProductsValidator {
                         decoration: _buildDecoration('Price'),
                         onSaved: _productsBloc.savePrice,
                         validator: validatePrice,
+                      ),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      Text(
+                        'Tamanhos',
+                        style: TextStyle(color: Colors.white12),
+                      ),
+                      ProductsSizes(
+                        initialValue: snapshot.data['sizes'],
+                        onSaved: _productsBloc.saveSizes,
+                        validator: validateSize,
+                        context: context,
                       ),
                     ],
                   );

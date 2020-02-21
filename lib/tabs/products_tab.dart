@@ -7,11 +7,12 @@ class ProductsTab extends StatefulWidget {
   _ProductsTabState createState() => _ProductsTabState();
 }
 
-class _ProductsTabState extends State<ProductsTab> with AutomaticKeepAliveClientMixin {
+class _ProductsTabState extends State<ProductsTab>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return FutureBuilder<QuerySnapshot>(
+    return StreamBuilder<QuerySnapshot>(
       builder: (context, snapshot) {
         if (!snapshot.hasData)
           return Center(
@@ -27,7 +28,7 @@ class _ProductsTabState extends State<ProductsTab> with AutomaticKeepAliveClient
             },
           );
       },
-      future: Firestore.instance.collection('products').getDocuments(),
+      stream: Firestore.instance.collection('products').snapshots(),
     );
   }
 

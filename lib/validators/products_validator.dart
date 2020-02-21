@@ -1,8 +1,9 @@
 class ProductsValidator {
-
-  String validateImages(List images){
-    if(images.isEmpty)return 'Adicione imagens do produto!';
-    else return null;
+  String validateImages(List images) {
+    if (images.isEmpty)
+      return 'Adicione imagens do produto!';
+    else
+      return null;
   }
 
   String validateTitle(String text) {
@@ -15,16 +16,21 @@ class ProductsValidator {
     return null;
   }
 
+  String validateSize(List sizes) {
+    if (sizes.isEmpty)
+      return 'Preencha um tamanho do produto!';
+    else
+    return null;
+  }
+
   String validatePrice(String text) {
     double price = double.tryParse(text);
-    if(price != null || price.isNaN){
-      if(!text.contains('.') || text.split('.')[1].length != 2)
+    if (price != null) {
+      if (!text.contains('.') || text.split('.')[1].length != 2)
         return 'Utilize duas casas decimais';
-    }else {
+    } else {
       return 'Preço inválido';
     }
     return null;
   }
-
-
 }
